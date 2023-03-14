@@ -1,6 +1,6 @@
 --This is run by the admin in the identity_db datatbase
 
-DROP TABLE identity_user_tokens;
+/* DROP TABLE identity_user_tokens;
 DROP TABLE identity_user_roles;
 DROP TABLE identity_user_logins;
 DROP TABLE identity_user_claims;
@@ -103,3 +103,4 @@ GRANT ALL ON TABLE public.identity_users TO identity_db_user;
 
 
 
+*/
