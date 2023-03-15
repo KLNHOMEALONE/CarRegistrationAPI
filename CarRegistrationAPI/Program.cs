@@ -1,6 +1,7 @@
 using CarRegistrationAPI.Context;
 using CarRegistrationAPI.Data;
 using CarRegistrationAPI.Extensions;
+using CarRegistrationAPI.Repositories;
 using DapperMigrations.Migrations;
 using FluentMigrator.Runner;
 using Identity.Dapper.Postgres;
@@ -29,15 +30,12 @@ builder.Services.AddTransient<IDatabaseConnectionFactory>(provider => new Postgr
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<Database>();
 
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
-//    .AddFluentMigratorCore()
-//    .ConfigureRunner(c  => c.AddPostgres11_0()
-//    .WithGlobalConnectionString(builder.Configuration.GetConnectionString("PostgresCarRegistrationDbConnection"))
-//    .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
 builder.Services.AddFluentMigratorCore()
     .ConfigureRunner(config => config.AddPostgres().WithGlobalConnectionString(builder.Configuration.GetConnectionString("PostgresCarRegistrationDbConnection"))
@@ -69,7 +67,10 @@ builder.Services.AddAuthentication(options => {
     };
 });
 
-//builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IOwnerRepository, OwnersRepository>();
+builder.Services.AddScoped<ICertificateRepository, CertificatesRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
